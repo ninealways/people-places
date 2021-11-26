@@ -1,0 +1,16 @@
+.userlist {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 500px;
+    margin: 2rem auto;
+
+    .no-users{
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #c3c5c7;
+    }
+}

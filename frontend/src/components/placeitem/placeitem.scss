@@ -1,0 +1,37 @@
+.place-item{
+    margin: 0 10px;
+    margin-bottom: 1rem;
+    background: #f6f6f6;
+    width: calc(50% - 20px);
+    transition: 0.1s ease-in;
+
+    .place-item-img{
+        width: 100%;
+        height: 150px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .place-details{
+        padding: 1rem;
+
+        .place-info {
+            h2{
+                font-size: 2rem;
+                margin: 0;
+            }
+            h3{
+                font-size: 1.2rem;
+                margin: 0;
+            }
+        }
+
+        .place-actions {
+            
+        }
+    }
+}

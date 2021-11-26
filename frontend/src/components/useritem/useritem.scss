@@ -1,0 +1,46 @@
+.user-item {
+    margin-bottom: 1rem;
+    background: #f6f6f6;
+    width: 100%;
+    transition: 0.1s ease-in;
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+  .user-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .user-image {
+      width: 150px;
+      height: 100px;
+      margin-right: 1rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .user-info{
+        h2{
+            font-size: 2rem;
+            margin: 0;
+            color: #333;
+        }
+        h3{
+            font-size: 1.2rem;
+            margin: 0;
+            color: #222;
+        }
+    }
+  }
+
+  &:hover{
+      box-shadow: 2px 2px 4px 5px #f3f3f3;
+  }
+}
