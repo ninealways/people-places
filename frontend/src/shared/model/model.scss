@@ -1,0 +1,38 @@
+.mymodel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+
+  .model-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .model {
+    position: absolute;
+    width: 100%;
+    max-width: 550px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    z-index: 11;
+    border-radius: 3px;
+    padding: 2rem 1rem;
+
+    .close-btn {
+        font-weight: 900;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem 0.7rem;
+        cursor: pointer;
+    }
+  }
+}

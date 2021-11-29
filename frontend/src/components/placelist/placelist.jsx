@@ -8,7 +8,7 @@ const PlaceList = (props) => {
         return (
             <div className="userlist center">
                 <h2 className="no-users">No places found!</h2>
-                <button>Share Place</button>
+                <div className="w-100 center"><button className="btn btn-green">Share Place</button></div>
             </div>
         )
     }
@@ -26,7 +26,7 @@ const PlaceList = (props) => {
                             description={place.description}
                             address={place.address}
                             creatorId={place.creator}
-                            coordinates={place.location}
+                            coordinates={place.coordinates}
                         />
                     )
                 })

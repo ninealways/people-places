@@ -1,0 +1,27 @@
+.form-control{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    input, textarea{
+        padding: 0.5rem 0.8rem;
+        background-color: #f2f2f2;
+        box-shadow: none;
+        border-radius: 3px;
+        border: none;
+        font-size: 1rem;
+    }
+
+    &.form-invalid{
+        input, textarea {
+            border: 1px solid #ee3131;
+        }
+
+        p{
+            margin: 0;
+            color: #ee3131;
+            font-size: 0.8rem;
+        }
+    }
+}

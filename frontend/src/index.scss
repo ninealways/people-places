@@ -10,7 +10,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.w-100{
+  width: 100%;
+}
 .center {
   text-align: center;
 }
@@ -49,4 +51,11 @@ code {
     background: #c63737;
     border-color: #c63737;
   }
+}
+
+button:disabled,
+button[disabled]{
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
 }
