@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PlaceItem from '../placeitem/placeitem';
 
 import './placelist.scss';
@@ -8,7 +9,7 @@ const PlaceList = (props) => {
         return (
             <div className="userlist center">
                 <h2 className="no-users">No places found!</h2>
-                <div className="w-100 center"><button className="btn btn-green">Share Place</button></div>
+                <div className="w-100 center"><Link to="/places/new" className="btn btn-green">Share Place</Link></div>
             </div>
         )
     }

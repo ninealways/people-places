@@ -1,16 +1,30 @@
-import './App.css';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Users from './pages/users/users';
 import NewPlace from './pages/place/newplace';
 import Header from './shared/header/header';
 import UserPlaces from './pages/userplaces/userplaces';
 import UpdatePlace from './pages/place/updateplace';
+import Login from './pages/login/login';
+import { LoginContext } from './shared/context/context';
+import { useCallback, useState } from 'react';
 
 const App = () => {
-  return (
-    <Router>
-      <Header />
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true)
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false)
+  }, []);
+
+  let routes;
+
+  if (isLoggedIn) {
+    routes = (
       <Switch>
+
         <Route path="/" exact>
           <Users />
         </Route>
@@ -25,7 +39,37 @@ const App = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    </Router>
+    )
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Route path="/:userId/places" exact>
+          <UserPlaces />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Redirect to="/login" />
+      </Switch>
+    )
+  }
+
+  return (
+    <LoginContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout
+      }}
+    >
+      <Router>
+        <Header />
+        {routes}
+      </Router>
+    </LoginContext.Provider>
   );
 }
 

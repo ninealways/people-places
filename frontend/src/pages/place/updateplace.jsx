@@ -1,5 +1,6 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useForm } from '../../shared/hooks/form-hook';
 import Input from '../../shared/input/input';
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../utils/validator';
 
@@ -32,40 +33,84 @@ const PLACES = [
     },
 ];
 
-const UpdatePlace = props =>{
+const UpdatePlace = props => {
+    const [isLoading, setIsLoading] = useState(true);
+
     const placeId = useParams().placeId;
+
+    const [formState, inputHandler, setFormData] = useForm({
+        title: {
+            value: '',
+            isValid: false,
+        },
+        description: {
+            value: '',
+            isValid: false,
+        }
+    }, true);
 
     const idPlace = PLACES.find(p => p.id === placeId);
 
-    if(!idPlace){
+    useEffect(() => {
+        if (idPlace) {
+            setFormData({
+                title: {
+                    value: idPlace.title,
+                    isValid: true,
+                },
+                description: {
+                    value: idPlace.description,
+                    isValid: true,
+                }
+            }, true);
+        }
+        setIsLoading(false);
+    }, [setFormData, idPlace]);
+
+    const placeUpdateSubmit = event => {
+        event.preventDefault();
+        console.log(formState.inputs);
+    }
+
+    if(!idPlace) {
         return(
-            <h2>Couldn't find this place!</h2>
+            <div className="userlist center">
+                <h2 className="no-users">No places found!</h2>
+                <div className="w-100 center">
+                    <Link to="/places/new" className="btn btn-green">Share Place</Link>
+                </div>
+            </div>
         )
     }
-    return(
-        <form className="place-form">
-            <Input 
+    if (isLoading) {
+        return (
+            <h2>Loading!</h2>
+        )
+    }
+    return (
+        <form className="place-form" onSubmit={placeUpdateSubmit} >
+            <Input
                 id="title"
                 element="input"
                 type="text"
                 label="Title"
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid title"
-                onInput={()=>{}}
-                value={idPlace.title}
-                valid={true}
+                onInput={inputHandler}
+                initialValue={formState.inputs.title.value}
+                initialValid={formState.inputs.title.isValid}
             />
-            <Input 
+            <Input
                 id="description"
                 element="textarea"
                 label="Description"
                 validators={[VALIDATOR_MINLENGTH(5)]}
                 errorText="Please enter atleast 5 characters"
-                onInput={()=>{}}
-                value={idPlace.description}
-                valid={true}
+                onInput={inputHandler}
+                initialValue={formState.inputs.description.value}
+                initialValid={formState.inputs.description.isValid}
             />
-            <button type="submit"  disabled={true}>Update Place</button>
+            <button className="btn btn-green" type="submit" disabled={!formState.isValid}>Update Place</button>
         </form>
     )
 }

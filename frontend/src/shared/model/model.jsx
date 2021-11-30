@@ -8,8 +8,8 @@ const ModelOverlay = props => {
         <div className={`mymodel ${props.modelClassName ? props.modelClassName : ''}`}>
             <div className="model-overlay"></div>
             <div className={`model ${props.className ? props.className : ''}`} style={props.style}>
-                <div className="close-btn" onClick={props.onCancel}>X</div>
-                <div className={`model-header ${props.headerClass ? props.headerClass : ''}`}>
+                {props.onCancel ? <div className="close-btn" onClick={props.onCancel}>X</div>: ''}
+                <div className={`model-header center ${props.headerClass ? props.headerClass : ''}`}>
                     {props.header}
                 </div>
                 <form onSubmit={props.onSubmit ? props.onSubmit : event => event.preventDefault()}>
