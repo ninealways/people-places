@@ -1,0 +1,17 @@
+.error-message{
+    padding: 1rem;
+    color: #ea2525;
+    font-size: 12px;
+    border: 1px solid #ea2525;
+    position: relative;
+
+    .error-close{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px;
+        font-size: 16px;
+        line-height: 12px;
+        cursor: pointer;
+    }
+}
