@@ -69,7 +69,6 @@ const UpdatePlace = props => {
 
     const placeUpdateSubmit = event => {
         event.preventDefault();
-        console.log(formState.inputs);
     }
 
     if(!idPlace) {

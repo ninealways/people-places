@@ -4,6 +4,7 @@ import Loader from '../../shared/loader/loader';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../utils/validator';
 import { LoginContext } from '../../shared/context/context';
 import ErrorMessage from '../../shared/error-message/error-message';
+
 import { useForm } from '../../shared/hooks/form-hook';
 import { useFetchClient } from '../../shared/hooks/fetch-hook';
 
@@ -30,22 +31,22 @@ const Login = () => {
 
         if(isLogin){ 
             try {              
-                await sendRequest('http://localhost:5000/api/users/login', 'POST',JSON.stringify({
+                const responseData = await sendRequest('http://localhost:5000/api/users/login', 'POST',JSON.stringify({
                     email: formState.inputs.email.value,
                     password: formState.inputs.password.value
                 }), {'Content-Type': 'application/json'})
     
-                auth.login();
-            } catch (error) {}      
+                auth.login(responseData.user.id);
+            } catch (error) {}
         }else{
             try {        
-                await sendRequest('http://localhost:5000/api/users/signup','POST',JSON.stringify({
+                const responseData = await sendRequest('http://localhost:5000/api/users/signup','POST',JSON.stringify({
                         name: formState.inputs.name.value,
                         email: formState.inputs.email.value,
                         password: formState.inputs.password.value
                     }),{'Content-Type': 'application/json'}
                 )
-                auth.login();
+                auth.login(responseData.user.id);
             } catch (error) {}
         }
     }

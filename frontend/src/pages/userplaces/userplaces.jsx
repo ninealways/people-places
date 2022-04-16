@@ -1,40 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PlaceList from '../../components/placelist/placelist';
-
-const PLACES = [
-    {
-        id: 'p1',
-        title: 'Taj Mahal',
-        description: '17th-century, Mughal-style, marble mausoleum with minarets, a mosque & famously symmetrical gardens.',
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Taj_Mahal_in_India_-_Kristian_Bertel.jpg/550px-Taj_Mahal_in_India_-_Kristian_Bertel.jpg',
-        address: 'Dharmapuri, Forest Colony, Tajganj, Agra, Uttar Pradesh 282001',
-        coordinates: {
-            lat: 27.1751448,
-            lng: 78.0399482
-        },
-        creator: 'u1'
-    },
-    {
-        id: 'p2',
-        title: 'Taj Mahal1',
-        description: '17th-century, Mughal-style, marble mausoleum with minarets, a mosque & famously symmetrical gardens.',
-        imageUrl: 'https://via.placeholder.com/150',
-        address: 'Dharmapuri, Forest Colony, Tajganj, Agra, Uttar Pradesh 282001',
-        coordinates: {
-            lat: 27.1751448,
-            lng: 78.0399482
-        },
-        creator: 'u2'
-    },
-];
+import ErrorMessage from '../../shared/error-message/error-message';
+import { useFetchClient } from '../../shared/hooks/fetch-hook';
+import Loader from '../../shared/loader/loader';
 
 const UserPlaces = () => {
-    const userId = useParams().userId;
-    const filteredPlaces = PLACES.filter(place => place.creator === userId);
+    const [loadedPlaces, setLoadedPlaces] = useState([]);
+    const { isLoading, error, sendRequest, clearError } = useFetchClient();
 
+    const userId = useParams().userId;
+
+    useEffect(()=> {
+        const getPlaces = async() => {
+            try {              
+                const responseData = await sendRequest(`http://localhost:5000/api/places/user/${userId}`);
+                setLoadedPlaces(responseData.places);
+            } catch (error) {}
+        }
+        getPlaces();
+    }, [sendRequest, userId])
     return (
-        <PlaceList items={filteredPlaces} />
+        <>
+        {isLoading && <Loader size={48} />}
+        {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+        {!loadedPlaces && error && <ErrorMessage  message={error} clearError={clearError}/>}
+        </>
     )
 }
 

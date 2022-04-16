@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import UsersList from '../../components/userslist/userslist';
+import ErrorMessage from '../../shared/error-message/error-message';
 import Loader from '../../shared/loader/loader';
+
+import { useFetchClient } from '../../shared/hooks/fetch-hook';
 
 import './users.scss';
 
 const Users = () => {
 
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
-    useEffect(()=>{
-        const sendRequest = async ()=>{
-            setIsLoading(true);
-            try {
-                const response = await fetch('http://localhost:5000/api/users');
+    const { isLoading, error, sendRequest, clearError } = useFetchClient();
 
-                const responseData = await response.json();
-                setUsers(responseData.users);
-                
-            } catch (error) {
-                setError(error.message || 'Something went wrong!');
-            }
-            setIsLoading(false);
+    useEffect(()=>{
+        const getUsers = async() =>{
+            try {              
+                const usersData = await sendRequest('http://localhost:5000/api/users');
+                setUsers(usersData.users);
+            } catch (error) {} 
         }
-        sendRequest();
-    }, []);
+        getUsers();
+    }, [sendRequest]);
 
     return(
         <>
             {isLoading && <Loader size={48} />}
-            {error && <p className="error-message">{error}</p>}
+            {error && <ErrorMessage  message={error} clearError={clearError}/>}
             {!isLoading && users && <UsersList items={users} />}
         </>
     )
