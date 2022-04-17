@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PlaceList from '../../components/placelist/placelist';
 import ErrorMessage from '../../shared/error-message/error-message';
-import { useFetchClient } from '../../shared/hooks/fetch-hook';
 import Loader from '../../shared/loader/loader';
+import { useFetchClient } from '../../shared/hooks/fetch-hook';
 
 const UserPlaces = () => {
     const [loadedPlaces, setLoadedPlaces] = useState([]);
@@ -19,12 +19,17 @@ const UserPlaces = () => {
             } catch (error) {}
         }
         getPlaces();
-    }, [sendRequest, userId])
+    }, [sendRequest, userId]);
+
+    const onDeletePlace = (deletedPlaceId) => {
+        setLoadedPlaces(prev => prev.filter(place => place.id !== deletedPlaceId))
+    }
+    
     return (
         <>
-        {isLoading && <Loader size={48} />}
-        {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
-        {!loadedPlaces && error && <ErrorMessage  message={error} clearError={clearError}/>}
+            {isLoading && <Loader size={48} />}
+            {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} onDeletePlace={onDeletePlace}/>}
+            {!loadedPlaces && error && <ErrorMessage  message={error} clearError={clearError}/>}
         </>
     )
 }
